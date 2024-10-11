@@ -528,3 +528,55 @@ if __name__ == '__main__':
 
 
 #  Market Structures
+
+from binance_data import BinanceData
+from strategies.market_structure import MarketStructure
+from models.ml_model import MLMarketStructureModel
+from logger import setup_logger
+
+logger = setup_logger()
+
+if __name__ == '__main__':
+    # Fetch data from Binance
+    binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+
+    if binance_data.data is not None:
+        # Step 1: Detect market structure and break of structure
+        market_structure = MarketStructure(binance_data.data)
+        market_structure.detect_structure()
+        market_structure.detect_break_of_structure()
+        market_structure.plot_bos()
+
+        # Step 2: Train the Market Structure-based ML model
+        market_structure_model = MLMarketStructureModel(binance_data.data, market_structure.highs, market_structure.lows, market_structure.bos)
+        predictions, y_test = market_structure_model.train_model()
+        market_structure_model.plot_predictions(predictions, y_test)
+
+
+
+
+
+
+# Break of Structure (BOS)
+
+from binance_data import BinanceData
+from strategies.break_of_structure import BreakOfStructure
+from models.ml_model import MLBOSModel
+from logger import setup_logger
+
+logger = setup_logger()
+
+if __name__ == '__main__':
+    # Fetch data from Binance
+    binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+
+    if binance_data.data is not None:
+        # Step 1: Detect break of structure
+        bos = BreakOfStructure(binance_data.data)
+        bos.detect_bos()
+        bos.plot_bos()
+
+        # Step 2: Train the BOS-based ML model
+        bos_model = MLBOSModel(binance_data.data, bos.bos)
+        predictions, y_test = bos_model.train_model()
+        bos_model.plot_predictions(predictions, y_test)
