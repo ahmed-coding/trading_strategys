@@ -2,6 +2,13 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
+# Summary:
+# Market Structure Detection: Identifies higher highs, higher lows (uptrend), and lower highs, lower lows (downtrend) to analyze market trends.
+# Break of Structure (BOS): Detects when price breaks through key support/resistance levels, signaling potential trend reversals.
+# Machine Learning: Uses market structure and break of structure signals to predict future price movements.
+
+
 class MarketStructure:
     def __init__(self, data):
         self.data = data
