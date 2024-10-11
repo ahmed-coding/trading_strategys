@@ -1,35 +1,36 @@
-from binance_data import BinanceData
-from strategies.fibonacci import FibonacciRetracement
-from strategies.breakout import BreakoutPatterns
-from models.ml_model import MLModel
-from logger import setup_logger
+# from binance_data import BinanceData
+# from strategies.fibonacci import FibonacciRetracement
+# from strategies.breakout import BreakoutPatterns
+# from models.ml_model import MLModel
+# from logger import setup_logger
 
-logger = setup_logger()
+# logger = setup_logger()
 
 
-if __name__ == '__main__':
-    # Fetch data from Binance
-    binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+# if __name__ == '__main__':
+#     # Fetch data from Binance
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
     
-    if binance_data.data is not None:
-        # Fibonacci Retracement
-        fib_retracement = FibonacciRetracement(binance_data.data)
-        fib_retracement.plot_levels()
+#     if binance_data.data is not None:
+#         # Fibonacci Retracement
+#         fib_retracement = FibonacciRetracement(binance_data.data)
+#         fib_retracement.plot_levels()
 
-        # Breakout Patterns
-        breakout = BreakoutPatterns(binance_data.data)
-        breakout.calculate_support_resistance()
-        breakout.plot_support_resistance()
+#         # Breakout Patterns
+#         breakout = BreakoutPatterns(binance_data.data)
+#         breakout.calculate_support_resistance()
+#         breakout.plot_support_resistance()
 
-        # Machine Learning Model
-        breakout_model = MLModel(binance_data.data)
-        predictions, y_test = breakout_model.train_model()
-        breakout_model.plot_predictions(predictions, y_test)
+#         # Machine Learning Model
+#         breakout_model = MLModel(binance_data.data)
+#         predictions, y_test = breakout_model.train_model()
+#         breakout_model.plot_predictions(predictions, y_test)
 
 
 
 
 #--------------- ReversalPatterns
+
 # from binance_data import BinanceData
 # from strategies.reversal import ReversalPatterns
 # from models.ml_model import MLReversalModel
@@ -38,7 +39,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2023")
     
 #     if binance_data.data is not None:
 #         # Step 1: Detect Reversal Patterns
@@ -65,7 +66,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2023")
     
 #     if binance_data.data is not None:
 #         # Step 1: Detect Elliott Waves
@@ -91,7 +92,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
     
 #     if binance_data.data is not None:
 #         # Step 1: Detect Elliott Waves and label them
@@ -115,7 +116,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2023")
 
 #     if binance_data.data is not None:
 #         # Step 1: Identify Fair Value Gaps
@@ -143,7 +144,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2023")
 
 #     if binance_data.data is not None:
 #         # Step 1: Detect Candlestick Patterns
@@ -198,7 +199,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Generate and plot moon phases
@@ -226,7 +227,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Calculate and plot Renko bricks
@@ -254,7 +255,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Detect harmonic patterns (Gartley, Butterfly, Bat, Crab)
@@ -307,27 +308,27 @@ if __name__ == '__main__':
 
 # # Trend Lines
 
-# # from binance_data import BinanceData
-# # from strategies.trend_lines import TrendLines
-# # from models.ml_model import MLTrendLineModel
-# # from logger import setup_logger
+# from binance_data import BinanceData
+# from strategies.trend_lines import TrendLines
+# from models.ml_model import MLTrendLineModel
+# from logger import setup_logger
 
-# # logger = setup_logger()
+# logger = setup_logger()
 
-# # if __name__ == '__main__':
-# #     # Fetch data from Binance
-# #     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+# if __name__ == '__main__':
+#     # Fetch data from Binance
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
-# #     if binance_data.data is not None:
-# #         # Step 1: Detect and plot trend lines
-# #         trend_lines = TrendLines(binance_data.data)
-# #         trend_lines.detect_trend_lines()
-# #         trend_lines.plot_trend_lines()
+#     if binance_data.data is not None:
+#         # Step 1: Detect and plot trend lines
+#         trend_lines = TrendLines(binance_data.data)
+#         trend_lines.detect_trend_lines()
+#         trend_lines.plot_trend_lines()
 
-# #         # Step 2: Train the ML model for trend line prediction
-# #         trend_model = MLTrendLineModel(binance_data.data, trend_lines.uptrend_lines, trend_lines.downtrend_lines)
-# #         predictions, y_test = trend_model.train_model()
-# #         trend_model.plot_predictions(predictions, y_test)
+#         # Step 2: Train the ML model for trend line prediction
+#         trend_model = MLTrendLineModel(binance_data.data, trend_lines.uptrend_lines, trend_lines.downtrend_lines)
+#         predictions, y_test = trend_model.train_model()
+#         trend_model.plot_predictions(predictions, y_test)
 
 # # v2
 
@@ -340,7 +341,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Detect multiple trend lines and breakouts
@@ -368,7 +369,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Calculate and plot Gann angles
@@ -397,7 +398,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Calculate and plot momentum indicators
@@ -426,7 +427,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Calculate and plot oscillators
@@ -453,7 +454,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+    # binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Detect and plot divergence
@@ -483,7 +484,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Calculate and plot volume indicators
@@ -510,7 +511,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Detect supply and demand zones
@@ -538,7 +539,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Detect market structure and break of structure
@@ -568,7 +569,7 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
 #     if binance_data.data is not None:
 #         # Step 1: Detect break of structure
@@ -589,24 +590,24 @@ if __name__ == '__main__':
 
 # #  Change of Character (CHoCH)
 
-# from binance_data import BinanceData
-# from strategies.change_of_character import ChangeOfCharacter
-# from models.ml_model import MLCHoCHModel
-# from logger import setup_logger
+from binance_data import BinanceData
+from strategies.change_of_character import ChangeOfCharacter
+from models.ml_model import MLCHoCHModel
+from logger import setup_logger
 
-# logger = setup_logger()
+logger = setup_logger()
 
-# if __name__ == '__main__':
-#     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+if __name__ == '__main__':
+    # Fetch data from Binance
+    binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
-#     if binance_data.data is not None:
-#         # Step 1: Detect and plot Change of Character (CHoCH)
-#         choch = ChangeOfCharacter(binance_data.data)
-#         choch.detect_choch()
-#         choch.plot_choch()
+    if binance_data.data is not None:
+        # Step 1: Detect and plot Change of Character (CHoCH)
+        choch = ChangeOfCharacter(binance_data.data)
+        choch.detect_choch()
+        choch.plot_choch()
 
-#         # Step 2: Train the CHoCH-based ML model
-#         choch_model = MLCHoCHModel(binance_data.data, choch.choch_signals)
-#         predictions, y_test = choch_model.train_model()
-#         choch_model.plot_predictions(predictions, y_test)
+        # Step 2: Train the CHoCH-based ML model
+        choch_model = MLCHoCHModel(binance_data.data, choch.choch_signals)
+        predictions, y_test = choch_model.train_model()
+        choch_model.plot_predictions(predictions, y_test)
