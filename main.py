@@ -580,3 +580,33 @@ if __name__ == '__main__':
         bos_model = MLBOSModel(binance_data.data, bos.bos)
         predictions, y_test = bos_model.train_model()
         bos_model.plot_predictions(predictions, y_test)
+
+
+
+
+
+
+
+#  Change of Character (CHoCH)
+
+from binance_data import BinanceData
+from strategies.change_of_character import ChangeOfCharacter
+from models.ml_model import MLCHoCHModel
+from logger import setup_logger
+
+logger = setup_logger()
+
+if __name__ == '__main__':
+    # Fetch data from Binance
+    binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+
+    if binance_data.data is not None:
+        # Step 1: Detect and plot Change of Character (CHoCH)
+        choch = ChangeOfCharacter(binance_data.data)
+        choch.detect_choch()
+        choch.plot_choch()
+
+        # Step 2: Train the CHoCH-based ML model
+        choch_model = MLCHoCHModel(binance_data.data, choch.choch_signals)
+        predictions, y_test = choch_model.train_model()
+        choch_model.plot_predictions(predictions, y_test)

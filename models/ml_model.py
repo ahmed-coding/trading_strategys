@@ -760,3 +760,53 @@ class MLBOSModel:
         plt.plot(y_test.values, label='Actual Trend')
         plt.legend()
         plt.show()
+
+
+
+
+
+
+
+class MLCHoCHModel:
+    def __init__(self, data, choch_signals):
+        self.data = data
+        self.choch_signals = choch_signals
+        self.model = RandomForestClassifier()
+        self.scaler = StandardScaler()
+
+    def prepare_data(self):
+        features = pd.DataFrame({
+            'Close': self.data['Close'],
+            'Volume': self.data['Volume'],
+            '50_MA': self.data['Close'].rolling(window=50).mean(),
+            '200_MA': self.data['Close'].rolling(window=200).mean()
+        }).dropna()
+
+        # Add CHoCH as a feature
+        features['CHoCH'] = features.index.isin([s[0] for s in self.choch_signals]).astype(int)
+
+        # Label: Predict upward or downward movement
+        features['Price_Move'] = (self.data['Close'].shift(-1) > self.data['Close']).astype(int)
+
+        X = features[['Close', 'Volume', '50_MA', '200_MA', 'CHoCH']]
+        y = features['Price_Move']
+
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
+        X_train = self.scaler.fit_transform(X_train)
+        X_test = self.scaler.transform(X_test)
+
+        return X_train, X_test, y_train, y_test
+
+    def train_model(self):
+        X_train, X_test, y_train, y_test = self.prepare_data()
+        self.model.fit(X_train, y_train)
+        predictions = self.model.predict(X_test)
+        accuracy = (predictions == y_test).mean()
+        print(f"Accuracy: {accuracy}")
+        return predictions, y_test
+
+    def plot_predictions(self, predictions, y_test):
+        plt.plot(predictions, label='Predicted Trend')
+        plt.plot(y_test.values, label='Actual Trend')
+        plt.legend()
+        plt.show()
