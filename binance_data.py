@@ -1,8 +1,8 @@
 from binance.client import Client
 import pandas as pd
 
-API_KEY = 'your_binance_api_key'
-API_SECRET = 'your_binance_secret_key'
+API_KEY = 'nHCAKjf112bSWMutN58GEevqhOZ2KqjP91IrW2xXMhbBHGIZuNU76QurKibiFNS9'
+API_SECRET = '2HFcVh6bJrMNTqUCSJ1ZHjFdteyLxujXSdVXiCkIwt8huJvczA9WqH7mJDfq29yl'
 
 class BinanceData:
     def __init__(self, symbol, interval, start_str):

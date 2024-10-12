@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 class CandlestickPatterns:
     def __init__(self, data):
