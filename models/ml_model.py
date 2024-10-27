@@ -4,46 +4,225 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 import matplotlib.pyplot as plt
 import talib
+from sklearn.metrics import classification_report
 
-class MLModel:
+
+# class MLModel:
+#     def __init__(self, data):
+#         self.data = data
+#         self.model = RandomForestClassifier()
+#         self.scaler = StandardScaler()
+
+#     def prepare_data(self):
+#         """
+#         Prepare features and labels for the ML model, including additional indicators.
+#         """
+#         # Prepare the features with moving averages, RSI, and price change
+#         features = pd.DataFrame({
+#             'Close': self.data['Close'],
+#             'Volume': self.data['Volume'],
+#             'Support': self.data['Low'].rolling(window=20).min(),
+#             'Resistance': self.data['High'].rolling(window=20).max(),
+#             'SMA_10': self.data['Close'].rolling(window=10).mean(),
+#             'SMA_50': self.data['Close'].rolling(window=50).mean(),
+#             'RSI': talib.RSI(self.data['Close'], timeperiod=14),
+#             'Price_Change': self.data['Close'].diff(),
+#         }).dropna()
+
+#         # Create the target label for breakout
+#         features['Breakout'] = ((self.data['Close'] > features['Resistance']) | 
+#                                 (self.data['Close'] < features['Support'])).shift(-1)
+
+#         # Drop rows with NaN values in the breakout column
+#         features = features.dropna()
+
+#         # Define features and labels
+#         X = features[['Close', 'Volume', 'Support', 'Resistance', 'SMA_10', 'SMA_50', 'RSI', 'Price_Change']]
+#         y = features['Breakout']
+
+#         # Split the dataset into training and test sets
+#         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
+
+#         # Scale the features
+#         X_train = self.scaler.fit_transform(X_train)
+#         X_test = self.scaler.transform(X_test)
+
+#         return X_train, X_test, y_train, y_test
+
+#     def train_model(self):
+#         """
+#         Train the model and evaluate it using classification metrics.
+#         """
+#         X_train, X_test, y_train, y_test = self.prepare_data()
+#         self.model.fit(X_train, y_train)
+#         predictions = self.model.predict(X_test)
+
+#         # Calculate accuracy and print the classification report
+#         accuracy = (predictions == y_test).mean()
+#         print(f"Accuracy: {accuracy}")
+#         print(classification_report(y_test, predictions))
+        
+#         return predictions, y_test
+
+#     def plot_predictions(self, predictions, y_test):
+#         """
+#         Plot the predicted vs actual values.
+#         """
+#         plt.plot(predictions, label='Predictions', color='blue')
+#         plt.plot(y_test.values, label='Actual', color='green')
+#         plt.legend()
+#         plt.title('Predictions vs Actual')
+#         plt.show()
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+
+class MLFibonacciModel:
+    def __init__(self, data):
+        self.data = data
+        self.model = RandomForestClassifier()  # The RandomForest model
+        self.scaler = StandardScaler()
+
+    def prepare_data(self):
+        """
+        Prepare features and labels for the ML model, including additional indicators.
+        """
+        # Prepare the features with moving averages, RSI, and price change
+        features = pd.DataFrame({
+            'Close': self.data['Close'],
+            'Volume': self.data['Volume'],
+            'Support': self.data['Low'].rolling(window=20).min(),
+            'Resistance': self.data['High'].rolling(window=20).max(),
+            'SMA_10': self.data['Close'].rolling(window=10).mean(),
+            'SMA_50': self.data['Close'].rolling(window=50).mean(),
+            'RSI': talib.RSI(self.data['Close'], timeperiod=14),
+            'Price_Change': self.data['Close'].diff(),
+            'Volume_Change': self.data['Volume'].diff()
+        }).dropna()
+
+        # Reindex self.data['Close'] to match features' index
+        reindexed_close = self.data['Close'].reindex(features.index)
+
+        # Create the target label for breakout by comparing reindexed close prices with support/resistance
+        features['Breakout'] = ((reindexed_close > features['Resistance']) | 
+                                (reindexed_close < features['Support'])).shift(-1)
+
+        # Drop rows with NaN values in the breakout column
+        features = features.dropna()
+
+        # Convert 'Breakout' from boolean to integer (0 or 1)
+        features['Breakout'] = features['Breakout'].astype(int)
+
+        # Define features and labels
+        X = features[['Close', 'Volume', 'Support', 'Resistance', 'SMA_10', 'SMA_50', 'RSI', 'Price_Change', 'Volume_Change']]
+        y = features['Breakout']
+
+        # Split the dataset into training and test sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
+
+        # Scale the features
+        X_train = self.scaler.fit_transform(X_train)
+        X_test = self.scaler.transform(X_test)
+
+        return X_train, X_test, y_train, y_test
+
+    def train(self):
+        """
+        Train the model and evaluate it using classification metrics.
+        """
+        X_train, X_test, y_train, y_test = self.prepare_data()
+        self.model.fit(X_train, y_train)
+        predictions = self.model.predict(X_test)
+
+        # Model evaluation
+        accuracy = (predictions == y_test).mean()
+        print(f"Model accuracy: {accuracy}")
+        print(classification_report(y_test, predictions))
+
+        return predictions, y_test
+
+    def predict(self, features):
+        # Ensure features are a 2D array
+        if len(features.shape) == 1:  # If it's a single sample
+            features = features.reshape(1, -1)
+        
+        # Scale the new features
+        features_scaled = self.scaler.transform(features)
+        
+        # Return the prediction from the model
+        return self.model.predict(features_scaled)
+
+
+class MLBreakoutModel:
     def __init__(self, data):
         self.data = data
         self.model = RandomForestClassifier()
         self.scaler = StandardScaler()
 
     def prepare_data(self):
+        """
+        Prepare features and labels for the ML model, including additional indicators.
+        """
+        # Prepare the features with moving averages, RSI, and price change
         features = pd.DataFrame({
             'Close': self.data['Close'],
             'Volume': self.data['Volume'],
             'Support': self.data['Low'].rolling(window=20).min(),
             'Resistance': self.data['High'].rolling(window=20).max(),
+            'SMA_10': self.data['Close'].rolling(window=10).mean(),
+            'SMA_50': self.data['Close'].rolling(window=50).mean(),
+            'RSI': talib.RSI(self.data['Close'], timeperiod=14),
+            'Price_Change': self.data['Close'].diff(),
+            'Volume_Change': self.data['Volume'].diff()
         }).dropna()
 
-        features['Breakout'] = ((self.data['Close'] > features['Resistance']) | 
-                                (self.data['Close'] < features['Support'])).shift(-1).dropna()
+        # Print the feature DataFrame to verify columns are correctly calculated
+        print(features.head())
 
-        X = features[['Close', 'Volume', 'Support', 'Resistance']]
+        # Reindex self.data['Close'] to match features' index
+        reindexed_close = self.data['Close'].reindex(features.index)
+
+        # Create the target label for breakout by comparing reindexed close prices with support/resistance
+        features['Breakout'] = ((reindexed_close > features['Resistance']) | 
+                                (reindexed_close < features['Support'])).shift(-1)
+
+        # Drop rows with NaN values in the breakout column
+        features = features.dropna()
+
+        # Convert 'Breakout' from boolean to integer (0 or 1)
+        features['Breakout'] = features['Breakout'].astype(int)
+
+        # Define features and labels
+        X = features[['Close', 'Volume', 'Support', 'Resistance', 'SMA_10', 'SMA_50', 'RSI', 'Price_Change', 'Volume_Change']]
         y = features['Breakout']
-        
+
+        # Split the dataset into training and test sets
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
+
+        # Scale the features
         X_train = self.scaler.fit_transform(X_train)
         X_test = self.scaler.transform(X_test)
-        
+
         return X_train, X_test, y_train, y_test
 
-    def train_model(self):
+
+    def train(self):
+        """
+        Train the RandomForest model.
+        """
         X_train, X_test, y_train, y_test = self.prepare_data()
         self.model.fit(X_train, y_train)
-        predictions = self.model.predict(X_test)
-        accuracy = (predictions == y_test).mean()
-        print(f"Accuracy: {accuracy}")
-        return predictions, y_test
+        accuracy = self.model.score(X_test, y_test)
+        print(f"Model accuracy: {accuracy}")
 
-    def plot_predictions(self, predictions, y_test):
-        plt.plot(predictions, label='Predictions')
-        plt.plot(y_test.values, label='Actual')
-        plt.legend()
-        plt.show()
+    def predict(self, features):
+        """
+        Predict whether to buy or sell based on the model.
+        """
+        features_scaled = self.scaler.transform([features])
+        return self.model.predict(features_scaled)
 
 
 # 
