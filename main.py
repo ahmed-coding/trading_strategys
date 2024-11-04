@@ -589,16 +589,89 @@ if __name__ == '__main__':
 
 #  Change of Character (CHoCH)
 
-from binance_data import BinanceData
-from strategies.change_of_character import ChangeOfCharacter
-from models.ml_model import MLCHoCHModel
-from logger import setup_logger
+# from binance_data import BinanceData
+# from strategies.change_of_character import ChangeOfCharacter
+# from models.ml_model import MLCHoCHModel
+# from logger import setup_logger
 
-logger = setup_logger()
+# logger = setup_logger()
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
+#     # Fetch data from Binance
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
+
+#     if binance_data.data is not None:
+#         # Step 1: Detect and plot Change of Character (CHoCH)
+#         choch = ChangeOfCharacter(binance_data.data)
+#         choch.detect_choch()
+#         choch.plot_choch()
+
+#         # Step 2: Train the CHoCH-based ML model
+#         choch_model = MLCHoCHModel(binance_data.data, choch.choch_signals)
+#         predictions, y_test = choch_model.train_model()
+#         choch_model.plot_predictions(predictions, y_test)
+
+
+
+
+
+
+
+# 
+
+# =========================================================== Tests ======================================
+
+
+# ---------- Breakout
+
+# from strategies.breakout import BreakoutPatterns
+# from models.ml_model import MLModel
+# from backtester import Backtester
+# from binance_data import BinanceData
+
+# def main():
+#     # Fetch data from Binance
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     data = binance_data.data
+
+#     if data is not None:
+#         # Initialize the ML model and train it
+#         ml_model = MLModel(data)
+#         ml_model.train()
+
+#         # Run the breakout strategy with ML confirmation
+#         breakout_strategy = BreakoutPatterns(data, ml_model)
+#         backtester = Backtester(breakout_strategy, data)
+#         performance = backtester.run_backtest()
+
+#         # Output performance metrics
+#         print("Performance Metrics:")
+#         print(f"Total Trades: {performance['trades']}")
+#         print(f"Wins: {performance['wins']}")
+#         print(f"Losses: {performance['losses']}")
+#         print(f"Net Profit/Loss: {performance['pnl']}")
+
+#         # Plot the results
+#         backtester.plot_results()
+#     else:
+#         print("Failed to fetch data from Binance.")
+
+# if __name__ == "__main__":
+#     main()
+
+
+
+# ------------- FibonacciStrategy
+
+from strategies.fibonacci import FibonacciStrategy  # Import the Fibonacci strategy
+from models.ml_model import MLFibonacciModel  # Import the ML model
+from backtester import Backtester  # Import the backtesting framework
+from binance_data import BinanceData  # Import Binance data fetcher
+from sklearn.preprocessing import StandardScaler
+
+def main():
     # Fetch data from Binance
-    binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+    binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
 
     if binance_data.data is not None:
         # Step 1: Detect and plot Change of Character (CHoCH)
@@ -606,7 +679,17 @@ if __name__ == '__main__':
         choch.detect_choch()
         choch.plot_choch()
 
-        # Step 2: Train the CHoCH-based ML model
-        choch_model = MLCHoCHModel(binance_data.data, choch.choch_signals)
-        predictions, y_test = choch_model.train_model()
-        choch_model.plot_predictions(predictions, y_test)
+        # Output performance metrics
+        print("Performance Metrics:")
+        print(f"Total Trades: {performance['trades']}")
+        print(f"Wins: {performance['wins']}")
+        print(f"Losses: {performance['losses']}")
+        print(f"Net Profit/Loss: {performance['pnl']}")
+
+        # Plot the results
+        backtester.plot_results()
+    else:
+        print("Failed to fetch data from Binance.")
+
+if __name__ == "__main__":
+    main()
