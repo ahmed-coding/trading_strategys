@@ -20,10 +20,10 @@ class VolumeIndicators:
         """
         obv = [0]
         for i in range(1, len(self.data)):
-            if self.data['Close'][i] > self.data['Close'][i-1]:
-                obv.append(obv[-1] + self.data['Volume'][i])
-            elif self.data['Close'][i] < self.data['Close'][i-1]:
-                obv.append(obv[-1] - self.data['Volume'][i])
+            if self.data['Close'].iloc[i] > self.data['Close'].iloc[i-1]:
+                obv.append(obv[-1] + self.data['Volume'].iloc[i])
+            elif self.data['Close'].iloc[i] < self.data['Close'].iloc[i-1]:
+                obv.append(obv[-1] - self.data['Volume'].iloc[i])
             else:
                 obv.append(obv[-1])
         return pd.Series(obv, index=self.data.index)

@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from strategies.strategy import Strategy
-import talib
-
+# import talib
+from ta.momentum import rsi
 
 
 class BreakoutPatterns:
@@ -16,7 +16,8 @@ class BreakoutPatterns:
         self.data['Price_Change'] = self.data['Close'].diff()  # Add Price_Change to the strategy
         self.data['SMA_10'] = self.data['Close'].rolling(window=10).mean()
         self.data['SMA_50'] = self.data['Close'].rolling(window=50).mean()
-        self.data['RSI'] = talib.RSI(self.data['Close'], timeperiod=14)
+        # self.data['RSI'] = talib.RSI(self.data['Close'], timeperiod=14)
+        self.data['RSI'] = rsi(self.data['Close'], window=14)
         self.data['Volume_Change'] = self.data['Volume'].diff()
 
     def calculate_support_resistance(self, window=20):

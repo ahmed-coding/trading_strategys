@@ -20,14 +20,14 @@ class BreakOfStructure:
         or below a support level (downtrend).
         """
         for i in range(2, len(self.data) - 2):
-            if self.data['Close'][i] > max(self.data['High'][i-2:i]):
+            if self.data['Close'].iloc[i] > max(self.data['High'].iloc[i-2:i]):
                 self.bos.append((i, 'Break of Structure (Uptrend)'))
-            elif self.data['Close'][i] < min(self.data['Low'][i-2:i]):
+            elif self.data['Close'].iloc[i] < min(self.data['Low'].iloc[i-2:i]):
                 self.bos.append((i, 'Break of Structure (Downtrend)'))
 
     def plot_bos(self):
         plt.plot(self.data['Close'], label='Close Price')
         bos_indices = [b[0] for b in self.bos]
-        plt.scatter(bos_indices, self.data['Close'][bos_indices], color='red', label='Break of Structure', marker='x')
+        plt.scatter(bos_indices, self.data['Close'].iloc[bos_indices], color='red', label='Break of Structure', marker='x')
         plt.legend()
         plt.show()

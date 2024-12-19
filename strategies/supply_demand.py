@@ -23,12 +23,12 @@ class SupplyDemand:
         """
         for i in range(window, len(self.data) - window):
             # Detect demand zones: Price reverses upwards after a drop
-            if min(self.data['Low'][i - window:i]) == self.data['Low'][i] and np.mean(self.data['Close'][i+1:i+window]) > self.data['Close'][i] * (1 + tolerance):
-                self.demand_zones.append((i, self.data['Low'][i]))
+            if min(self.data['Low'].iloc[i - window:i]) == self.data['Low'].iloc[i] and np.mean(self.data['Close'].iloc[i+1:i+window]) > self.data['Close'].iloc[i] * (1 + tolerance):
+                self.demand_zones.append((i, self.data['Low'].iloc[i]))
 
             # Detect supply zones: Price reverses downwards after a rise
-            if max(self.data['High'][i - window:i]) == self.data['High'][i] and np.mean(self.data['Close'][i+1:i+window]) < self.data['Close'][i] * (1 - tolerance):
-                self.supply_zones.append((i, self.data['High'][i]))
+            if max(self.data['High'].iloc[i - window:i]) == self.data['High'].iloc[i] and np.mean(self.data['Close'].iloc[i+1:i+window]) < self.data['Close'].iloc[i] * (1 - tolerance):
+                self.supply_zones.append((i, self.data['High'].iloc[i]))
 
     def plot_zones(self):
         plt.plot(self.data['Close'], label='Close Price')

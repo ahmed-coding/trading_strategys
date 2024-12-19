@@ -22,13 +22,13 @@ class MarketStructure:
         """
         for i in range(2, len(self.data) - 2):
             # Detect higher highs (HH) and higher lows (HL) for uptrend
-            if self.data['High'][i] > max(self.data['High'][i-2:i]) and self.data['Low'][i] > min(self.data['Low'][i-2:i]):
-                self.highs.append((i, self.data['High'][i]))
-                self.lows.append((i, self.data['Low'][i]))
+            if self.data['High'].iloc[i] > max(self.data['High'].iloc[i-2:i]) and self.data['Low'].iloc[i] > min(self.data['Low'].iloc[i-2:i]):
+                self.highs.append((i, self.data['High'].iloc[i]))
+                self.lows.append((i, self.data['Low'].iloc[i]))
             # Detect lower highs (LH) and lower lows (LL) for downtrend
-            elif self.data['High'][i] < min(self.data['High'][i-2:i]) and self.data['Low'][i] < min(self.data['Low'][i-2:i]):
-                self.highs.append((i, self.data['High'][i]))
-                self.lows.append((i, self.data['Low'][i]))
+            elif self.data['High'].iloc[i] < min(self.data['High'].iloc[i-2:i]) and self.data['Low'].iloc[i] < min(self.data['Low'].iloc[i-2:i]):
+                self.highs.append((i, self.data['High'].iloc[i]))
+                self.lows.append((i, self.data['Low'].iloc[i]))
 
     def plot_structure(self):
         plt.plot(self.data['Close'], label='Close Price')

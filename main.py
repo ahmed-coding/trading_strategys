@@ -475,26 +475,27 @@
 
 # # Volume Indicators
 
-# from binance_data import BinanceData
-# from strategies.volume_indicators import VolumeIndicators
+from binance_data import BinanceData
+from strategies.volume_indicators import VolumeIndicators
 # from models.ml_model import MLVolumeModel
-# from logger import setup_logger
+from logger import setup_logger
 
-# logger = setup_logger()
+logger = setup_logger()
 
-# if __name__ == '__main__':
-#     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
+if __name__ == '__main__':
+    # Fetch data from Binance
+    # binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
+    binance_data = BinanceData(symbol="ETHUSDT", interval="1m", start_str="15 hours ago UTC")
 
-#     if binance_data.data is not None:
-#         # Step 1: Calculate and plot volume indicators
-#         volume_indicators = VolumeIndicators(binance_data.data)
-#         volume_indicators.plot_volume_indicators()
+    if binance_data.data is not None:
+        # Step 1: Calculate and plot volume indicators
+        volume_indicators = VolumeIndicators(binance_data.data)
+        volume_indicators.plot_volume_indicators()
 
-#         # Step 2: Train the Volume-based ML model
-#         volume_model = MLVolumeModel(binance_data.data)
-#         predictions, y_test = volume_model.train_model()
-#         volume_model.plot_predictions(predictions, y_test)
+        # Step 2: Train the Volume-based ML model
+        # volume_model = MLVolumeModel(binance_data.data)
+        # predictions, y_test = volume_model.train_model()
+        # volume_model.plot_predictions(predictions, y_test)
 
 
 
@@ -545,8 +546,8 @@
 #         # Step 1: Detect market structure and break of structure
 #         market_structure = MarketStructure(binance_data.data)
 #         market_structure.detect_structure()
-#         market_structure.detect_break_of_structure()
-#         market_structure.plot_bos()
+#         # market_structure.detect_break_of_structure()
+#         market_structure.plot_structure()
 
 #         # Step 2: Train the Market Structure-based ML model
 #         market_structure_model = MLMarketStructureModel(binance_data.data, market_structure.highs, market_structure.lows, market_structure.bos)
@@ -593,20 +594,37 @@
 # from binance_data import BinanceData
 # from strategies.change_of_character import ChangeOfCharacter
 # from models.ml_model import MLCHoCHModel
+# from backtester import Backtester
+
 # from logger import setup_logger
 
 # logger = setup_logger()
 
 # if __name__ == '__main__':
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
-
+#     # binance_data = BinanceData(symbol="BTCUSDT", interval="4h", start_str="1 Jan 2024")
+#     binance_data = BinanceData(symbol="ETHUSDT", interval="1m", start_str="15 hours ago UTC")
+#     data = binance_data.data
 #     if binance_data.data is not None:
 #         # Step 1: Detect and plot Change of Character (CHoCH)
 #         choch = ChangeOfCharacter(binance_data.data)
 #         choch.detect_choch()
 #         choch.plot_choch()
+#         # breakout_strategy = BreakoutPatterns(data, ml_model)
+#         backtester = Backtester(choch,data )
+#         performance = backtester.run_backtest()
 
+#         # Output performance metrics
+#         print("Performance Metrics:")
+#         print(f"Total Trades: {performance['trades']}")
+#         print(f"Wins: {performance['wins']}")
+#         print(f"Losses: {performance['losses']}")
+#         print(f"Net Profit/Loss: {performance['pnl']}")
+
+#         # Plot the results
+#         backtester.plot_results()
+        
+        
 #         # Step 2: Train the CHoCH-based ML model
 #         choch_model = MLCHoCHModel(binance_data.data, choch.choch_signals)
 #         predictions, y_test = choch_model.train_model()
@@ -626,18 +644,21 @@
 # ---------- Breakout
 
 # from strategies.breakout import BreakoutPatterns
-# from models.ml_model import MLModel
+# from models.ml_model import MLBreakoutModel
 # from backtester import Backtester
 # from binance_data import BinanceData
 
 # def main():
 #     # Fetch data from Binance
-#     binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     # binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="ETHUSDT", interval="1m", start_str="15 hours ago UTC")
+
 #     data = binance_data.data
+    
 
 #     if data is not None:
 #         # Initialize the ML model and train it
-#         ml_model = MLModel(data)
+#         ml_model = MLBreakoutModel(data)
 #         ml_model.train()
 
 #         # Run the breakout strategy with ML confirmation
@@ -664,39 +685,41 @@
 
 # ------------- FibonacciStrategy
 
-from strategies.fibonacci import FibonacciStrategy  # Import the Fibonacci strategy
-from models.ml_model import MLFibonacciModel  # Import the ML model
-from backtester import Backtester  # Import the backtesting framework
-from binance_data import BinanceData  # Import Binance data fetcher
-from sklearn.preprocessing import StandardScaler
+# from strategies.fibonacci import FibonacciStrategy  # Import the Fibonacci strategy
+# from models.ml_model import MLFibonacciModel  # Import the ML model
+# from backtester import Backtester  # Import the backtesting framework
+# from binance_data import BinanceData  # Import Binance data fetcher
+# from sklearn.preprocessing import StandardScaler
 
-def main():
-    # Fetch data from Binance
-    binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
-    data = binance_data.data
-    scaler = StandardScaler()
+# def main():
+#     # Fetch data from Binance
+#     # binance_data = BinanceData(symbol="BTCUSDT", interval="1d", start_str="1 Jan 2020")
+#     binance_data = BinanceData(symbol="BTCUSDT", interval="5m", start_str="15 hours ago UTC")
+#     data = binance_data.data
+#     scaler = StandardScaler()
 
-    if data is not None:
-        # Initialize and train the ML model
-        ml_model = MLFibonacciModel(data)  # Ensure the right model class is instantiated
-        ml_model.train()
+#     if data is not None:
+#         # Initialize and train the ML model
+#         ml_model = MLFibonacciModel(data)  # Ensure the right model class is instantiated
+#         # ml_model.prepare_data()
+#         ml_model.train()
 
-        # Run the Fibonacci strategy with ML confirmation
-        fibonacci_strategy = FibonacciStrategy(data, ml_model,scaler)
-        backtester = Backtester(fibonacci_strategy, data)
-        performance = backtester.run_backtest()
+#         # Run the Fibonacci strategy with ML confirmation
+#         fibonacci_strategy = FibonacciStrategy(data, ml_model,scaler)
+#         backtester = Backtester(fibonacci_strategy, data)
+#         performance = backtester.run_backtest()
 
-        # Output performance metrics
-        print("Performance Metrics:")
-        print(f"Total Trades: {performance['trades']}")
-        print(f"Wins: {performance['wins']}")
-        print(f"Losses: {performance['losses']}")
-        print(f"Net Profit/Loss: {performance['pnl']}")
+#         # Output performance metrics
+#         print("Performance Metrics:")
+#         print(f"Total Trades: {performance['trades']}")
+#         print(f"Wins: {performance['wins']}")
+#         print(f"Losses: {performance['losses']}")
+#         print(f"Net Profit/Loss: {performance['pnl']}")
 
-        # Plot the results
-        backtester.plot_results()
-    else:
-        print("Failed to fetch data from Binance.")
+#         # Plot the results
+#         backtester.plot_results()
+#     else:
+#         print("Failed to fetch data from Binance.")
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

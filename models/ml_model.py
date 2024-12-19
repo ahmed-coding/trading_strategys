@@ -3,9 +3,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import matplotlib.pyplot as plt
-import talib
+# import talib
 from sklearn.metrics import classification_report
-
+from ta.momentum import rsi
+import ta
 
 # class MLModel:
 #     def __init__(self, data):
@@ -25,7 +26,8 @@ from sklearn.metrics import classification_report
 #             'Resistance': self.data['High'].rolling(window=20).max(),
 #             'SMA_10': self.data['Close'].rolling(window=10).mean(),
 #             'SMA_50': self.data['Close'].rolling(window=50).mean(),
-#             'RSI': talib.RSI(self.data['Close'], timeperiod=14),
+#             # 'RSI': talib.RSI(self.data['Close'], timeperiod=14),
+            # 'RSI': rsi(self.data['Close'], window=14),
 #             'Price_Change': self.data['Close'].diff(),
 #         }).dropna()
 
@@ -97,7 +99,9 @@ class MLFibonacciModel:
             'Resistance': self.data['High'].rolling(window=20).max(),
             'SMA_10': self.data['Close'].rolling(window=10).mean(),
             'SMA_50': self.data['Close'].rolling(window=50).mean(),
-            'RSI': talib.RSI(self.data['Close'], timeperiod=14),
+            # # 'RSI': talib.RSI(self.data['Close'], timeperiod=14),
+            'RSI': rsi(self.data['Close'], window=14),
+            'RSI': rsi(self.data['Close'], window=14),
             'Price_Change': self.data['Close'].diff(),
             'Volume_Change': self.data['Volume'].diff()
         }).dropna()
@@ -173,7 +177,8 @@ class MLBreakoutModel:
             'Resistance': self.data['High'].rolling(window=20).max(),
             'SMA_10': self.data['Close'].rolling(window=10).mean(),
             'SMA_50': self.data['Close'].rolling(window=50).mean(),
-            'RSI': talib.RSI(self.data['Close'], timeperiod=14),
+            # 'RSI': talib.RSI(self.data['Close'], timeperiod=14),
+            'RSI': rsi(self.data['Close'], window=14),
             'Price_Change': self.data['Close'].diff(),
             'Volume_Change': self.data['Volume'].diff()
         }).dropna()

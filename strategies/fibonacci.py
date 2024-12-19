@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
 from strategies.strategy import Strategy
-import talib
+# import talib
 import pandas as pd
 import numpy as np
-
+import ta
+from ta.momentum import rsi
 # class FibonacciStrategy:
 #     def __init__(self, data, ml_model):
 #         self.data = data
@@ -76,7 +77,8 @@ class FibonacciStrategy:
         self.data['Price_Change'] = self.data['Close'].diff()  # Calculate Price_Change
         self.data['SMA_10'] = self.data['Close'].rolling(window=10).mean()  # Calculate SMA 10
         self.data['SMA_50'] = self.data['Close'].rolling(window=50).mean()  # Calculate SMA 50
-        self.data['RSI'] = talib.RSI(self.data['Close'], timeperiod=14)  # Calculate RSI
+        # self.data['RSI'] = talib.RSI(self.data['Close'], timeperiod=14)  # Calculate RSI
+        self.data['RSI'] = rsi(self.data['Close'], window=14)  # Calculate RSI
         self.data['Volume_Change'] = self.data['Volume'].diff()  # Calculate Volume Change
 
     def calculate_levels(self):
